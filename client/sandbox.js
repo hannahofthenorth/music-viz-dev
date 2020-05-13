@@ -1,7 +1,7 @@
 import Visualizer from './classes/visualizer'
 import { interpolateRgb, interpolateBasis } from 'd3-interpolate'
 import { getRandomElement } from './util/array'
-import { sin, circle, star, drawShape, fractal } from './util/canvas'
+import { sin, circle, star, drawShape, fractal } from './util/canvas_sandbox'
 import { convertToRGBA } from './util/rgb_to_rgba'
 
 export default class Example extends Visualizer {
@@ -88,24 +88,13 @@ export default class Example extends Visualizer {
     
     var fillStyleInput = interpolateRgb(this.lastColor, this.nextColor)(this.sync.bar.progress)
     fillStyleInput = convertToRGBA(fillStyleInput)
-    //console.log(fillStyleInput)
-    //console.log(typeof fillStyleInput)
-
 
     ctx.fillStyle = fillStyleInput //Fill the background black at alpha 0.05 for fade effect
     ctx.fillRect(0, 0, width, height) //Fill the whole screen
     ctx.lineWidth = 4 // Define line width
     //ctx.strokeStyle = interpolateRgb(this.lastColor, this.nextColor)(this.sync.bar.progress) // transition between colors smoothly
-    //console.log(ctx.strokeStyle)
     ctx.strokeStyle = '#ffffff'
     fractal(ctx, vol_input, width/2, height, this.rotation)
-    // if (this.counter<10){
-    //   fractal(ctx, vol_input+1, width/2, height, this.rotation)
-    // }else {
-    //   ctx.rotate(Math.PI)
-    //   fractal(ctx, vol_input+1, width/2, height, this.rotation)
-    // } 
-    //fractal(ctx, this.height, width/2, height,this.rotation)
     ctx.stroke()
   }
 }

@@ -13,6 +13,10 @@ module.exports = merge(common, {
   devtool: 'inline-source-map',
   devServer: {
     contentBase: path.resolve(__dirname, '../serve'),
-    port: process.env.CLIENT_PORT || 8080
+    //public: 'http://4439eeb7.ngrok.io',
+    port: process.env.CLIENT_PORT || 8080,
+    allowedHosts: [
+      '.ngrok.io'
+    ]
   }
 })

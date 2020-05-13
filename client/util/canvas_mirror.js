@@ -82,6 +82,7 @@ export function sin (ctx, xOffset, yOffset, amplitude, frequency, tick = 5) {
 export function fractal(ctx, len, x0, y0, angle) {
   // angle in [0,360]
   branch(ctx, len, 1, x0, y0, angle)
+  branchMirror(ctx, len, 1, x0, y0, angle)
   return ctx
 }
 
@@ -90,7 +91,6 @@ export function branch(ctx, len, counter, x0, y0, angle) {
     ctx.save()
     ctx.moveTo(x0, y0)
     ctx.rotate(Math.PI/3)
-    //circle(ctx, x0, y0, 4, 5, 5)
     ctx.lineTo(x0-len,y0-len)
   } else {
   }
@@ -98,28 +98,51 @@ export function branch(ctx, len, counter, x0, y0, angle) {
   ctx.save()
   ctx.translate(x0, y0)
   if (counter==1) {
-    ctx.rotate(Math.PI/180)
+    //ctx.rotate(Math.PI/180)
   } else {
     ctx.rotate(angle * Math.PI/180)
   }
   ctx.moveTo(0,0)
-  //star(ctx, 3, 2, 4, 0, 0, 0)
-  circle(ctx, 0, 0, 3)
-  //ctx.lineTo(0,-len/2)
+  ctx.lineTo(-len, 0)
   ctx.stroke()
-  if (len<100) {
-    //console.log(counter)
+  if (len<10) {
     ctx.restore()
     return
   }
-  if (counter>4) {
-    // laptop can't process more than 5 iterations with 4 branches
+  // if (counter>4) {
+  //   // laptop can't process more than 5 iterations with 4 branches
+  //   ctx.restore()
+  //   return
+  // }
+  branch(ctx, 0.75*len, counter+1, -len, 0, angle)
+  branch(ctx, 0.75*len, counter+1, -len, 0, -angle)
+  ctx.restore()
+}
+export function branchMirror(ctx, len, counter, x0, y0, angle) {
+  if (counter==0){
+    ctx.save()
+    ctx.moveTo(x0, y0)
+    ctx.rotate(Math.PI/3)
+    ctx.lineTo(x0-len,y0-len)
+  } else {
+  }
+  ctx.beginPath()
+  ctx.save()
+  ctx.translate(x0, y0)
+  if (counter==1) {
+    //ctx.rotate(Math.PI/180)
+  } else {
+    ctx.rotate(angle * Math.PI/180)
+  }
+  ctx.moveTo(0,0)
+  ctx.lineTo(len, 0)
+  ctx.stroke()
+  if (len<10) {
     ctx.restore()
     return
   }
-  branch(ctx, 0.7*len, counter+1, 0, -len, angle)
-  branch(ctx, 0.7*len, counter+1, 0, -len, -angle)
-  branch(ctx, 0.7*len, counter+1, 0, -len, angle+30)
-  branch(ctx, 0.7*len, counter+1, 0, -len, -angle-30)
+
+  branchMirror(ctx, 0.75*len, counter+1, len, 0, angle)
+  branchMirror(ctx, 0.75*len, counter+1, len, 0, -angle)
   ctx.restore()
 }
