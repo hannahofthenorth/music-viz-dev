@@ -1,0 +1,6 @@
+export const defaultTheme = ['#00ffd0', '#7718FF', '#06C5FE', '#ff00c3', '#00ffd0', '#ffeb6b']
+export const thunderclouds = ['#fff269', '#ffe066', '#8400ff', '#59eeff', '#cc52ff', '#8400ff']
+export const shapesDefault = ['#00ffd0', '#7718FF', '#06C5FE', '#ff00c3', '#00ffd0','#ffa0b3']
+export const fireshrine = ['#fffa66', '#ffe066', '#ffb042', '#ff6554', '#ff7e42', '#ff4b42']
+export const griffinFavorite = ['#00ffd0', '#7718FF', '#06C5FE', '#ff00c3', '#00ffd0','#ffa0b3']
+export const volumeTheme = ['#00ffd0', '#7718FF', '#06C5FE', '#ff00c3', '#00ffd0','#ffa0b3']
