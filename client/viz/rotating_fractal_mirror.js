@@ -1,19 +1,19 @@
 import Visualizer from '../classes/visualizer'
 import { interpolateRgb, interpolateBasis, interpolateHcl } from 'd3-interpolate'
 import { getRandomElement } from '../util/array'
-import { sin, circle, star, drawShape, fractal } from '../util/canvases/rotating_fractal_mirror'
-import { thunderclouds } from '../util/color_themes'
+import { fractalmirror } from '../util/canvases/rotating_fractal_mirror'
+import { rainbow } from '../util/color_themes'
 
 export default class RotatingFractalMirror extends Visualizer {
   constructor () {
     super({ volumeSmoothing: 10 })
-    this.theme = thunderclouds
+    this.theme = rainbow
     this.counter = 1
     this.rotation = 20
-    this.height = 256
+    this.height = 200
     this.section = 0
     this.overallRotation = 0
-    this.sidesList = [3, 5, 6, 8, 10]
+    this.sidesList = [5, 6, 8]
     this.sides=5
   }
 
@@ -54,10 +54,10 @@ export default class RotatingFractalMirror extends Visualizer {
     })
     this.sync.on('segment', segment => {
       //on every segment
-      this.sides = getRandomElement(this.sidesList)
     })
     this.sync.on('section', section => {
       //on every section
+      this.sides = getRandomElement(this.sidesList)
     })
   }
 
@@ -67,11 +67,14 @@ export default class RotatingFractalMirror extends Visualizer {
     const tatum = interpolateBasis([0, this.sync.volume * 200, 0])(this.sync.tatum.progress)
     
     
-    ctx.fillStyle = 'rgba(0, 0, 0, .3)' //Fill the background black at alpha 0.05 for fade effect
+    ctx.fillStyle = 'rgba(0, 0, 0, .3)' //Fill the background black at alpha 0.3 for fade effect
     ctx.fillRect(0, 0, width, height) //Fill the whole screen
     ctx.lineWidth = 1 // Define line width
     ctx.strokeStyle = interpolateHcl(this.lastColor, this.nextColor)(this.sync.bar.progress) // transition between colors smoothly
-    fractal(ctx, 400, width/2, height/2, this.rotation, this.overallRotation, this.sides)
+    fractalmirror(ctx, this.height, width/2, height/2, this.rotation, this.overallRotation, 12)
+    // fractalmirror(ctx, this.height, width/4, height/2, this.rotation, this.overallRotation, this.sides)
+    // fractalmirror(ctx, this.height, (3*width)/4, height/2, this.rotation, this.overallRotation, this.sides)
     ctx.stroke()
+    
   }
 }

@@ -52,6 +52,19 @@ export function circle (ctx, x, y, radius, start = 0, end = TWO_PI) {
   return ctx
 }
 
+export function shape (ctx, sides, x, y, size, rotation = 0) {
+  const test = polygon(sides, size, x, y, rotation)
+  const verticies = []
+  
+  for (var i=0; i<sides; i++) {
+      verticies.push({ x: test[i].x, y:test[i].y})
+  }
+
+  ctx.lineWidth = size
+  drawShape(ctx, verticies)
+  return {test, verticies}
+}
+
 export function drawShape (ctx, vertices) {
   vertices.forEach(({ x, y }, i) => {
     if (i === 0) {

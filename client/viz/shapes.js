@@ -1,14 +1,13 @@
 import Visualizer from '../classes/visualizer'
-import { interpolateRgb, interpolateBasis, interpolateHcl } from 'd3-interpolate'
+import { interpolateBasis, interpolateHcl } from 'd3-interpolate'
 import { getRandomElement } from '../util/array'
-import { sin, circle, star, drawShape, fractal, square, shape } from '../util/canvases/sandbox'
-import { convertToRGBA } from '../util/rgb_to_rgba'
-import { shapesDefault } from '../util/color_themes'
+import { shape } from '../util/canvases/canvas'
+import { rainbow } from '../util/color_themes'
 
 export default class Shapes extends Visualizer {
   constructor () {
     super({ volumeSmoothing: 10 })
-    this.theme = shapesDefault // color theme
+    this.theme = rainbow 
     this.counter = 1
     this.rotation = 20
     this.height = 256
@@ -25,14 +24,14 @@ export default class Shapes extends Visualizer {
       this.rotation+= 2
     })
     this.sync.on('beat', beat => {
+      this.lastColor = this.nextColor || getRandomElement(this.theme)
+      this.nextColor = getRandomElement(this.theme.filter(color => color !== this.nextColor))
       if (this.rotation>360) {
         this.rotation=0;
       }
       this.rotation+= 2
     })
     this.sync.on('bar', bar => {
-      this.lastColor = this.nextColor || getRandomElement(this.theme)
-      this.nextColor = getRandomElement(this.theme.filter(color => color !== this.nextColor))
       this.counter++
       if (this.counter%20==0) {
         this.counter=1
@@ -62,10 +61,12 @@ export default class Shapes extends Visualizer {
       vol_input = height
     }
 
-    
+    // setup
     ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'
     ctx.fillRect(0, 0, width, height) //Fill the whole screen
     ctx.strokeStyle = interpolateHcl(this.lastColor, this.nextColor)(this.sync.bar.progress) // transition between colors smoothly
+
+
     shape(ctx, this.sides, width/2, height/2, 50*bar+tatum, this.rotation)
     ctx.stroke()
   }

@@ -48,9 +48,14 @@ export function branch(ctx, len, counter, x0, y0, angle, overallAngle) {
     return
   }
 
+  if (counter>4) {
+      ctx.restore()
+      return
+  }
+
   // branches
-  branch(ctx, 0.65*len, counter+1, -len, -len, angle, overallAngle)
-  branch(ctx, 0.65*len, counter+1, -len, -len, -angle, overallAngle)
+  branch(ctx, 0.75*len, counter+1, -len, -len, angle, overallAngle)
+  branch(ctx, 0.75*len, counter+1, -len, -len, -angle-30, overallAngle)
 
   // restore
   ctx.restore()
