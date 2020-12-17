@@ -14,7 +14,8 @@ module.exports = merge(common, {
   devServer: {
     contentBase: path.resolve(__dirname, '../serve'),
     //public: 'http://4439eeb7.ngrok.io',
-    port: process.env.CLIENT_PORT || 8080,
+    // port: process.env.CLIENT_PORT || 8080,
+    port: process.env.CLIENT_PORT,
     allowedHosts: [
       '.ngrok.io'
     ]
