@@ -8,7 +8,8 @@ const compression = require('compression')
 
 const app = express()
 const root = path.resolve(__dirname, '../dist')
-const port = process.env.PORT || 8001
+// const port = process.env.PORT || 8001
+const port = process.env.PORT
 
 if (process.env.NODE_ENV === 'development') {
   app.use((req, res, next) => {
